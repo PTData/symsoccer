@@ -24,7 +24,9 @@ class TeamRepository extends EntityRepository {
     public function find($id) {
         return $this
             ->select('name_team')
-   ->from('Team', 't');
+            ->from('Team', 't');
+            
+            #teste
     }
     
 }
