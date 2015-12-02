@@ -20,13 +20,14 @@ use AppBundle\Entity\Team;
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
 class TeamRepository extends EntityRepository {
-    
+    /*
     public function find($id) {
         return $this
             ->select('name_team')
             ->from('Team', 't');
             
+            
             #teste
-    }
+    }*/
     
 }

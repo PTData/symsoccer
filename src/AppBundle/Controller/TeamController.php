@@ -35,14 +35,14 @@ class TeamController extends Controller
         
         $team = $this->getDoctrine()
         ->getRepository('AppBundle:Team')
-        ->find($id);
-        
+        ->findAll();
+        /*
         if(!$team) {
             throw $this->createNotFoundException(
                //'Nao ha equipa com este id: ' . $id;
             );
             return 0;
-        }
+        }*/
         return $team;
     }
     
