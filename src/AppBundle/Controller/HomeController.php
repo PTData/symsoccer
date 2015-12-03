@@ -19,8 +19,8 @@ class HomeController extends Controller {
             );*/
         
         $data = $this->numberAction();
-        
-        return $this->render('home.html.twig', array("data" => $data));
+        $array= array("test", "teuys");
+        return $this->render('home.html.twig', array("data" => $data, "array" => $array));
     }
     
     private function numberAction() {
