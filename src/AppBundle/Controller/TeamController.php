@@ -55,11 +55,10 @@ class TeamController extends Controller
         
         //$data = $this->showAction($team);
         //dump($id); die();
-        $data = $this->getDoctrine()
-        ->getRepository('AppBundle:Team');
+        $data = $this->getDoctrine()->getManager();
+        $team = $data->getRepository('AppBundle:Team')->selectAll();
         
-        $d = $data->find($team);
-        return $this->render('teams.html.twig', array("data" => $d));
+        return $this->render('teams.html.twig', array("data" => $team));
         //return new JsonResponse($id);
     }
     
