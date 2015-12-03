@@ -57,8 +57,16 @@ class TeamController extends Controller
         //dump($id); die();
         $data = $this->getDoctrine()->getManager();
         $team = $data->getRepository('AppBundle:Team')->selectAll();
+        $name = "";
+        foreach ($team as $object) {
+        // ID variable
+            $name = $object->getNameteam();
+            
+        }
+        $name = $team->getNameteam();
         
-        return $this->render('teams.html.twig', array("data" => $team));
+        
+        return $this->render('teams.html.twig', array("data" => $name));
         //return new JsonResponse($id);
     }
     
