@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    {{ data }}
+    <h3>These are the Teams!</h3>
+    <p>Please choose one of these teams!</p>
+    <ul>
+    {% for key, team in data %}
+        <li><a href="team/show/{{key}}">{{ team}}</a></li>
+    {% endfor %}
+    </ul>
     
+    {{ dump(data) }}
 {% endblock %}
