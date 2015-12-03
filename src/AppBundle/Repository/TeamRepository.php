@@ -14,7 +14,7 @@ class TeamRepository extends EntityRepository {
             
             #teste
     }*/
-    public function selectAll()
+    public function selectOne()
     {
         $t = $this->getEntityManager()
             ->createQuery(
@@ -22,7 +22,17 @@ class TeamRepository extends EntityRepository {
             )
             ->getSingleResult();
             
-        var_dump($t);    
+       // var_dump($t);    
+        return $t;
+    }
+    public function selectAll() {
+        $t = $this->getEntityManager()
+            ->createQuery(
+                'SELECT t FROM AppBundle:Team t ORDER BY t.name_team ASC'
+            )
+            ->getResult();
+            
+       # var_dump($t);    
         return $t;
     }
     

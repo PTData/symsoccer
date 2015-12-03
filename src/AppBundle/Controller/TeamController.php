@@ -15,7 +15,16 @@ class TeamController extends Controller
      */
     public function teams() {
         
-        return $this->render('team.html.twig');
+        $data = $this->getDoctrine()->getManager();
+        $teams = $data->getRepository('AppBundle:Team')->selectAll();
+        $arr = array();
+        foreach($teams as $key=>$team) {
+            $arr[$team->getIdteam()] = $team->getNameTeam();
+        }
+        dump($arr);
+        return $this->render('teams.html.twig', array("data" => $arr));
+        
+        #return $this->render('team.html.twig');
     }
     /**
      * @Route("/team/create")
@@ -31,20 +40,20 @@ class TeamController extends Controller
         return new Response('Create Team id' . $team->getIdteam());
     }
     
-    private function showAction($id) {
+    private function showAction($id = null) {
         
         $team = $this->getDoctrine()
-        ->getRepository('AppBundle:Team')
-        ->findAll();
+        ->getRepository('AppBundle:Team');
+        
+        if(!empty($id)) $team->find($id);
+        else $team->findAll();
         /*
         if(!$team) {
             throw $this->createNotFoundException(
-               //'Nao ha equipa com este id: ' . $id;
+               #'Nao ha equipa com este id: ' . $id;
             );
             return 0;
         }*/
-        //$t = $team->getProducts();
-       // dump($team); die();
         return $team;
     }
     
@@ -53,20 +62,13 @@ class TeamController extends Controller
      */
     public function team($team) {
         
-        //$data = $this->showAction($team);
-        //dump($id); die();
         $data = $this->getDoctrine()->getManager();
-        $team = $data->getRepository('AppBundle:Team')->selectAll();
-        $name = "";
-        foreach ($team as $object) {
-        // ID variable
-            $name = $object->getNameteam();
-            
-        }
-        $name = $team->getNameteam();
-        
-        
-        return $this->render('teams.html.twig', array("data" => $name));
+        $team = $data->getRepository('AppBundle:Team')->find($team);
+        $equipa = array(
+          "nome" =>  $team->getNameTeam(),
+          "id" => $team->getIdteam() 
+        );
+        return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($id);
     }
     
