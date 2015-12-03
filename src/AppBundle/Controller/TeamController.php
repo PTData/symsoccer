@@ -43,6 +43,8 @@ class TeamController extends Controller
             );
             return 0;
         }*/
+        //$t = $team->getProducts();
+       // dump($team); die();
         return $team;
     }
     
@@ -51,9 +53,14 @@ class TeamController extends Controller
      */
     public function team($team) {
         
-        $id = $this->showAction($team);
+        //$data = $this->showAction($team);
+        //dump($id); die();
+        $data = $this->getDoctrine()
+        ->getRepository('AppBundle:Team');
         
-        return new JsonResponse($id);
+        $d = $data->find($team);
+        return $this->render('teams.html.twig', array("data" => $d));
+        //return new JsonResponse($id);
     }
     
 
