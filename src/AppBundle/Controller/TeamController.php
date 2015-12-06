@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
+use AppBundle\Entity\Player;
 class TeamController extends Controller
 {
     /**
@@ -15,7 +16,14 @@ class TeamController extends Controller
      */
     public function teams() {
         
-        return $this->render('team.html.twig');
+        $data = $this->getDoctrine()->getManager();
+        $teams = $data->getRepository('AppBundle:Team')->selectAll();
+        $arr = array();
+        foreach($teams as $key=>$team) {
+            $arr[$team->getIdteam()] = $team->getNameTeam();
+        }
+#        dump($arr);
+        return $this->render('teams.html.twig', array("data" => $arr));
     }
     /**
      * @Route("/team/create")
@@ -31,15 +39,17 @@ class TeamController extends Controller
         return new Response('Create Team id' . $team->getIdteam());
     }
     
-    private function showAction($id) {
+    private function showAction($id = null) {
         
         $team = $this->getDoctrine()
-        ->getRepository('AppBundle:Team')
-        ->findAll();
+        ->getRepository('AppBundle:Team');
+        
+        if(!empty($id)) $team->find($id);
+        else $team->findAll();
         /*
         if(!$team) {
             throw $this->createNotFoundException(
-               //'Nao ha equipa com este id: ' . $id;
+               #'Nao ha equipa com este id: ' . $id;
             );
             return 0;
         }*/
@@ -51,9 +61,19 @@ class TeamController extends Controller
      */
     public function team($team) {
         
-        $id = $this->showAction($team);
+        $data = $this->getDoctrine()->getManager();
+        $team = $data->getRepository('AppBundle:Team')->find($team);
+        $equipa = array(
+          "nome" =>  $team->getNameTeam(),
+          "id" => $team->getIdteam() 
+        );
         
-        return new JsonResponse($id);
+        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
+        foreach($player as $p) {
+            $equipa['player'][] = $p->getNamePlayer();
+        }
+        return $this->render('team.html.twig', $equipa);
+        //return new JsonResponse($id);
     }
     
 
