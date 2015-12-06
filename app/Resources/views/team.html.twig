@@ -2,4 +2,9 @@
 {% block body %}
     
     <h2>Bem vindo &agrave; p&aacute;gina da equipa {{ nome }}</h2>
+    <ul>
+    {% for p in player %}
+        <li>{{ p|e }}</li>
+    {% endfor %}
+    </ul>
 {% endblock %}

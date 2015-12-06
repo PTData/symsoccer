@@ -1,0 +1,65 @@
+<?php
+// src/AppBundle/Entity/Player.php
+namespace AppBundle\Entity;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
+ * @ORM\Entity
+ * @ORM\Table(name="player")
+ */
+class Player {
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    protected $id_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $status_player;
+    /**
+     * @ORM\Column(type="string", length=120)
+     */
+    protected $name_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $age_player;
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    protected $position_player;
+    /**
+     * @ORM\Column(type="decimal", length=20)
+     */
+    protected $value_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $quality_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $number_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $idTeam_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $condition_player;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    protected $forma_player;
+    /**
+     * @ORM\Column(type="smallint", length=2)
+     */
+    protected $situation;
+}
+
+?>
