@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
+use AppBundle\Entity\Player;
 class TeamController extends Controller
 {
     /**
@@ -21,10 +22,8 @@ class TeamController extends Controller
         foreach($teams as $key=>$team) {
             $arr[$team->getIdteam()] = $team->getNameTeam();
         }
-        dump($arr);
+#        dump($arr);
         return $this->render('teams.html.twig', array("data" => $arr));
-        
-        #return $this->render('team.html.twig');
     }
     /**
      * @Route("/team/create")
@@ -68,6 +67,11 @@ class TeamController extends Controller
           "nome" =>  $team->getNameTeam(),
           "id" => $team->getIdteam() 
         );
+        
+        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
+        foreach($player as $p) {
+            $equipa['player'][] = $p->getNamePlayer();
+        }
         return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($id);
     }
