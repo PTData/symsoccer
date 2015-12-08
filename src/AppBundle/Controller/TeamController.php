@@ -68,12 +68,27 @@ class TeamController extends Controller
           "id" => $team->getIdteam() 
         );
         
+        $player = $this->forward('AppBundle:Player:players', array(
+        'team'  => $team,
+        ));
+        $data = $this->getDoctrine()->getManager();
         $player = $data->getRepository('AppBundle:Player')->findTeam($team);
-        foreach($player as $p) {
-            $equipa['player'][] = $p->getNamePlayer();
+
+        $pl = array();
+        foreach($player as $key=>$p) {
+            $pl[$key]['nome'] = $p->getNamePlayer();
+            $pl[$key]['idade'] = $p->getAgePlayer();
+            $pl[$key]['posicao'] = $p->getPositionPlayer();
+            $pl[$key]['qualidade'] = $p->getQualityPlayer();
+            $pl[$key]['numero'] = $p->getNumberPlayer();
+            $pl[$key]['forma'] = $p->getFormaPlayer();
+            $pl[$key]['condicao'] = $p->getConditionPlayer();
+            $pl[$key]['situacao'] = $p->getSituation();
         }
+        $equipa["jogadores"] = $pl;
+
         return $this->render('team.html.twig', $equipa);
-        //return new JsonResponse($id);
+        //return new JsonResponse($equipa);
     }
     
 

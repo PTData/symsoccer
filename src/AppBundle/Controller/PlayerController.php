@@ -1,36 +1,31 @@
 <?php
 
 namespace AppBundle\Controller;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use AppBundle\Entity\Team;
 use AppBundle\Entity\Player;
-class PlayerController extends Controller
-{
+class PlayerController extends Controller {
  
     
-    /**
-     * #@Route("/team/show/{team}", name="Equipa")
-     */
-    /*public function team($team) {
-        
+    public function playersAction($team) {
         $data = $this->getDoctrine()->getManager();
-        $team = $data->getRepository('AppBundle:Team')->find($team);
-        $equipa = array(
-          "nome" =>  $team->getNameTeam(),
-          "id" => $team->getIdteam() 
-        );
-        $t = $data->getRepository('AppBundle:Team');
-        $player = $data->getRepository('AppBundle:Player');
-        dump($player);
-        dump($t);
-        return $this->render('team.html.twig', $equipa);
-        //return new JsonResponse($player);
-    }*/
+        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
+
+        $pl = array();
+        foreach($player as $key=>$p) {
+            $pl[$key]['nome'] = $p->getNamePlayer();
+            $pl[$key]['idade'] = $p->getAgePlayer();
+            $pl[$key]['posicao'] = $p->getPositionPlayer();
+            $pl[$key]['qualidade'] = $p->getQualityPlayer();
+            $pl[$key]['numero'] = $p->getNumberPlayer();
+            $pl[$key]['forma'] = $p->getFormaPlayer();
+            $pl[$key]['condicao'] = $p->getConditionPlayer();
+            $pl[$key]['situacao'] = $p->getSituation();
+        }
+        return new JsonResponse(array('jogadores'=>$pl));
+        //return new Response($pl);
+    }
     
 
 }
