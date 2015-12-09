@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Task;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
 use AppBundle\Entity\Player;
+
 class TeamController extends Controller
 {
     /**
@@ -68,9 +70,9 @@ class TeamController extends Controller
           "id" => $team->getIdteam() 
         );
         
-        $player = $this->forward('AppBundle:Player:players', array(
+        /*$player = $this->forward('AppBundle:Player:players', array(
         'team'  => $team,
-        ));
+        ));*/
         $data = $this->getDoctrine()->getManager();
         $player = $data->getRepository('AppBundle:Player')->findTeam($team);
 
@@ -86,10 +88,34 @@ class TeamController extends Controller
             $pl[$key]['situacao'] = $p->getSituation();
         }
         $equipa["jogadores"] = $pl;
-
+        $equipa["form"] = $this->_form();
+        
         return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($equipa);
     }
-    
+    private function _form() {
+        $task = new Player();
+        /*$task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTime('tomorrow'));
+*/
+        $form = $this->createFormBuilder($task)
+            ->add('situation', 'choice', array(
+                    'choices'  => array(
+                        'Maybe' => null,
+                        'Yes' => true,
+                        'No' => false,
+                    ),
+                    // *this line is important*
+                    'choices_as_values' => true,
+                ))
+            
+            ->add('save', 'submit', array('label' => 'Create Task'))
+            ->getForm();
+
+        /*return $this->render('default/new.html.twig', array(
+            'form' => $form->createView(),
+        ));*/
+        return $form->createView();
+    }
 
 }
