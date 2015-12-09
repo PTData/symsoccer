@@ -2,4 +2,32 @@
 {% block body %}
     
     <h2>Bem vindo &agrave; p&aacute;gina da equipa {{ nome }}</h2>
+    <ul>
+        
+        <!-- {{ dump(jogadores) }} -->
+        
+    <table width="80%"> 
+        <tr> 
+            <td>Numero</td> 
+            <td>Nome</td> 
+            <td>Posição</td> 
+            <td>Idade</td> 
+            <td>Qualidade</td>
+            <td>Forma</td>
+            <td>Condição</td>
+            <td>Situacao</td>
+        </tr> 
+        {% for p in jogadores %}
+        <tr>
+            <td>{{ p.numero }} </td>
+            <td>{{ p.nome }} </td>
+            <td>{{ p.posicao}}</td>
+            <td>{{ p.idade}}</td>
+            <td>{{ p.qualidade}}</td>
+            <td>{{ p.forma}}</td>
+            <td>{{ p.condicao}}</td>
+            <td>{{ p.situacao}}</td>
+        </tr>
+            {% endfor %}
+    </table>
 {% endblock %}
