@@ -85,25 +85,22 @@ class TeamController extends Controller
             $pl[$key]['numero'] = $p->getNumberPlayer();
             $pl[$key]['forma'] = $p->getFormaPlayer();
             $pl[$key]['condicao'] = $p->getConditionPlayer();
-            $pl[$key]['situacao'] = $p->getSituation();
+            //$pl[$key]['situacao'] = $p->getSituation();
+            $pl[$key]['form'] = $this->_form($p);
         }
         $equipa["jogadores"] = $pl;
-        $equipa["form"] = $this->_form();
-        
+        //$equipa["form"] = $this->_form($pl);
+        //dump($pl);
         return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($equipa);
     }
-    private function _form() {
-        $task = new Player();
-        /*$task->setTask('Write a blog post');
-        $task->setDueDate(new \DateTime('tomorrow'));
-*/
-        $form = $this->createFormBuilder($task)
+    private function _form($pl) {
+        $form = $this->createFormBuilder($pl)
             ->add('situation', 'choice', array(
                     'choices'  => array(
-                        'Maybe' => null,
-                        'Yes' => true,
-                        'No' => false,
+                        'Titular' => 1,
+                        'Suplente' => 2,
+                        'N Convocado' => 0,
                     ),
                     // *this line is important*
                     'choices_as_values' => true,

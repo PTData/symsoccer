@@ -5,7 +5,7 @@
     <ul>
         
         <!-- {{ dump(jogadores) }} -->
-{{ form_start(form) }}    
+
     <table width="80%"> 
         <tr> 
             <td>Numero</td> 
@@ -26,9 +26,10 @@
             <td>{{ p.qualidade}}</td>
             <td>{{ p.forma}}</td>
             <td>{{ p.condicao}}</td>
-            <td>{{ p.situacao}}</td>
+            <td>{{ form_start(p.form) }} {{ form_end(p.form) }}</td>
+
         </tr>
             {% endfor %}
     </table>
-{{ form_end(form) }}
+
 {% endblock %}
