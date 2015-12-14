@@ -26,10 +26,26 @@
             <td>{{ p.qualidade}}</td>
             <td>{{ p.forma}}</td>
             <td>{{ p.condicao}}</td>
-            <td>{{ form_start(p.form) }} {{ form_end(p.form) }}</td>
+            <!--<td>{# form_start(p.form) #} {# form_end(p.form) #}</td> -->
+            <td>{{ p.form }} </td>
 
         </tr>
             {% endfor %}
     </table>
 
+{% endblock %}
+{% block javascript %}
+$.ajax({
+    type: "POST",
+    dataType: 'json',
+    url: Routing.generate('ajax'),
+    async: false //you won't need that if nothing in your following code is dependend of the result
+})
+.done(function(response){
+    template = response;
+    $('#your_div').html(template.html); //Change the html of the div with the id = "your_div"                        
+})
+.fail(function(jqXHR, textStatus, errorThrown){
+    alert('Error : ' + errorThrown);
+});
 {% endblock %}
