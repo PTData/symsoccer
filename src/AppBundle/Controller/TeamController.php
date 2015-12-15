@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Task;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
@@ -90,7 +89,7 @@ class TeamController extends Controller
         }
         $equipa["jogadores"] = $pl;
         //$equipa["form"] = $this->_form($pl);
-        //dump($pl);
+        dump($pl);
         return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($equipa);
     }
