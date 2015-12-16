@@ -89,12 +89,12 @@ class TeamController extends Controller
         }
         $equipa["jogadores"] = $pl;
         //$equipa["form"] = $this->_form($pl);
-        dump($pl);
+
         return $this->render('team.html.twig', $equipa);
         //return new JsonResponse($equipa);
     }
     private function _form($pl) {
-        $form = $this->createFormBuilder($pl)
+        $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'+$pl->getNumberPlayer()]])
             ->add('situation', 'choice', array(
                     'choices'  => array(
                         'Titular' => 1,
