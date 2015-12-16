@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-        {% stylesheets
-		    'css/bootstrap.min.css'
-		    'css/main.css'
-		    filter='cssrewrite' output='css/compiled/app.css' %}
-		    <link rel="stylesheet" href="{{ asset_url }}" />
-		{% endstylesheets %}
-        {% endblock %}
-        {% javascripts '@AppBundle/Resources/assets/js/*' %}
-		    <script src="{{ asset_url }}"></script>
-		{% endjavascripts %}
-        
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/font-lato.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+
+
+<img src="images/{{ asset('blue-arrae.png') }}">
+
+
+{% block javascripts %}
+    {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
+        {% javascripts filter="?jsqueeze" output="js/app.js"
+            "%kernel.root_dir%/Resources/assets/js/jquery-2.1.4.js"
+            "%kernel.root_dir%/Resources/assets/js/bootstrap-3.3.4.js"
+            "%kernel.root_dir%/Resources/assets/js/highlight.pack.js" %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    #}
+
+    <script src="{{ asset('js/jquery-2.1.4.js') }}"></script>
+
+    <script>
+
+    </script>
+{% endblock %}
+</body>
 </html>
