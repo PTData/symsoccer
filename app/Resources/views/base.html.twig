@@ -10,9 +10,6 @@
 {% block body %}{% endblock %}
 
 
-<img src="images/{{ asset('blue-arrae.png') }}">
-
-
 {% block javascripts %}
     {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
         {% javascripts filter="?jsqueeze" output="js/app.js"
@@ -24,10 +21,8 @@
     #}
 
     <script src="{{ asset('js/jquery-2.1.4.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
 
-    <script>
-
-    </script>
 {% endblock %}
 </body>
 </html>
