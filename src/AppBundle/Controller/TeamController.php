@@ -94,7 +94,7 @@ class TeamController extends Controller
         //return new JsonResponse($equipa);
     }
     private function _form($pl) {
-        $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'+$pl->getNumberPlayer()]])
+        $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'.$pl->getNumberPlayer()]])
             ->add('situation', 'choice', array(
                     'choices'  => array(
                         'Titular' => 1,
