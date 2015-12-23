@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Livraria\Teste;
 use AppBundle\Entity\Task;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,7 +17,9 @@ class TeamController extends Controller
      * @Route("/teams", name="Equipas")
      */
     public function teams() {
-        
+
+        $t = new Teste();
+
         $data = $this->getDoctrine()->getManager();
         $teams = $data->getRepository('AppBundle:Team')->selectAll();
         $arr = array();

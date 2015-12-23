@@ -40,10 +40,10 @@ class PlayerController extends Controller {
             return new Response(json_encode('NO AJAX'));
         }
         $request = $this->container->get('request');
-        $data = $request->query->get('data');
+        $data = $request->query->get('resquest');
         $response = array("success" => $request);
         //you can return result as JSON
-        return new Response(json_encode($response));
+        return new Response(json_encode($data));
     }
     
 
