@@ -1,9 +1,11 @@
 <?php
 
 namespace AppBundle\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Player;
 class PlayerController extends Controller {
  
@@ -25,6 +27,23 @@ class PlayerController extends Controller {
         }
         return new JsonResponse(array('jogadores'=>$pl));
         //return new Response($pl);
+    }
+
+    /**
+     * @Route("/player", name="Player")
+     */
+    public function ajax_player(Request $request) {
+        // is it an Ajax request?
+        //extract($_POST);
+        $isAjax = $request->isXmlHttpRequest();
+        if(!$isAjax) {
+            return new Response(json_encode('NO AJAX'));
+        }
+        $request = $this->container->get('request');
+        $data = $request->query->get('resquest');
+        $response = array("success" => $request);
+        //you can return result as JSON
+        return new Response(json_encode($data));
     }
     
 

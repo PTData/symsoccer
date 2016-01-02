@@ -2,9 +2,13 @@
 
 namespace AppBundle\Controller;
 
+<<<<<<< HEAD
+=======
+use AppBundle\Livraria\Teste;
+use AppBundle\Entity\Task;
+>>>>>>> master
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
@@ -17,7 +21,9 @@ class TeamController extends Controller
      * @Route("/teams", name="Equipas")
      */
     public function teams() {
-        
+
+        $t = new Teste();
+
         $data = $this->getDoctrine()->getManager();
         $teams = $data->getRepository('AppBundle:Team')->selectAll();
         $arr = array();
@@ -102,6 +108,11 @@ class TeamController extends Controller
         
          
         $equipa["jogadores"] = $pl;
+<<<<<<< HEAD
+=======
+        //$equipa["form"] = $this->_form($pl);
+
+>>>>>>> master
         return $this->render('team.html.twig', $equipa);
     }
     
@@ -120,8 +131,13 @@ class TeamController extends Controller
     }
     
     private function _form($pl) {
+<<<<<<< HEAD
         $form = $this->createFormBuilder($pl)
             ->add("situation", 'choice', array(
+=======
+        $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'.$pl->getNumberPlayer()]])
+            ->add('situation', 'choice', array(
+>>>>>>> master
                     'choices'  => array(
                         'Titular' => 1,
                         'Suplente' => 2,

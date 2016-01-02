@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('css/font-lato.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}{% endblock %}
+
+
+{% block javascripts %}
+    {# uncomment the following lines to combine and minimize JavaScript assets with Assetic
+        {% javascripts filter="?jsqueeze" output="js/app.js"
+            "%kernel.root_dir%/Resources/assets/js/jquery-2.1.4.js"
+            "%kernel.root_dir%/Resources/assets/js/bootstrap-3.3.4.js"
+            "%kernel.root_dir%/Resources/assets/js/highlight.pack.js" %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    #}
+
+    <script src="{{ asset('js/jquery-2.1.4.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+
+{% endblock %}
+</body>
 </html>

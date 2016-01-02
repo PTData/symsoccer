@@ -26,14 +26,19 @@
             <td>{{ p.qualidade}}</td>
             <td>{{ p.forma}}</td>
             <td>{{ p.condicao}}</td>
+<<<<<<< HEAD
             <!--<td>{# form_start(p.form) #} {# form_end(p.form) #}</td> -->
             <td>{{ p.form }} </td>
+=======
+            <td class="target" >{{ form_start(p.form) }} {{ form_end(p.form) }}</td>
+>>>>>>> master
 
         </tr>
             {% endfor %}
     </table>
 
 {% endblock %}
+<<<<<<< HEAD
 {% block javascript %}
 $.ajax({
     type: "POST",
@@ -49,3 +54,5 @@ $.ajax({
     alert('Error : ' + errorThrown);
 });
 {% endblock %}
+=======
+>>>>>>> master
