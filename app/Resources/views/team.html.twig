@@ -1,11 +1,35 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <h3>These are the Teams!</h3>
-    <p>Please choose one of these teams!</p>
     
+    <h2>Bem vindo &agrave; p&aacute;gina da equipa {{ nome }}</h2>
     <ul>
-        <li><a href="/team/1">Equipa 1</a></li>
-        <li><a href="/team/2">Equipa 2</a></li>
-    </ul>
-    
+        
+        <!-- {{ dump(jogadores) }} -->
+
+    <table width="80%"> 
+        <tr> 
+            <td>Numero</td> 
+            <td>Nome</td> 
+            <td>Posição</td> 
+            <td>Idade</td> 
+            <td>Qualidade</td>
+            <td>Forma</td>
+            <td>Condição</td>
+            <td>Situacao</td>
+        </tr> 
+        {% for p in jogadores %}
+        <tr>
+            <td>{{ p.numero }} </td>
+            <td>{{ p.nome }} </td>
+            <td>{{ p.posicao}}</td>
+            <td>{{ p.idade}}</td>
+            <td>{{ p.qualidade}}</td>
+            <td>{{ p.forma}}</td>
+            <td>{{ p.condicao}}</td>
+            <td class="target" >{{ form_start(p.form) }} {{ form_end(p.form) }}</td>
+
+        </tr>
+            {% endfor %}
+    </table>
+
 {% endblock %}

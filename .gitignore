@@ -9,3 +9,8 @@
 /composer.phar
 /vendor/
 /web/bundles/
+/nbproject/private/
+.idea/workspace.xml
+.project
+.idea/workspace.xml
+.idea/workspace.xml
