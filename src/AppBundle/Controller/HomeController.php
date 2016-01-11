@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class HomeController extends Controller {
     
     protected $number;
@@ -17,7 +18,8 @@ class HomeController extends Controller {
         /*return new Response(
             "<h3>My Home</h3>"               
             );*/
-        
+
+
         $data = $this->numberAction();
         $array= array("test", "teuys");
         return $this->render('home.html.twig', array("data" => $data, "array" => $array));

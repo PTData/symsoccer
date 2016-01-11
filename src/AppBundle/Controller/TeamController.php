@@ -1,7 +1,6 @@
 <?php
 
 namespace AppBundle\Controller;
-
 use AppBundle\Livraria\Teste;
 use AppBundle\Entity\Task;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,7 +17,9 @@ class TeamController extends Controller
      */
     public function teams() {
 
-        $t = new Teste();
+        $home = $this->t2(1);
+        $visitor = $this->t2(2);
+        $t = new Teste($home, $visitor);
 
         $data = $this->getDoctrine()->getManager();
         $teams = $data->getRepository('AppBundle:Team')->selectAll();
@@ -59,7 +60,20 @@ class TeamController extends Controller
         }*/
         return $team;
     }
-    
+
+    private function t2($team){
+        $data = $this->getDoctrine()->getManager();
+        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
+
+        $pl = array();
+        foreach($player as $key=>$p) {
+            $pl[$key]['qualidade'] = $p->getQualityPlayer();
+            $pl[$key]['forma'] = $p->getFormaPlayer();
+        }
+
+        return $player;
+    }
+
     /**
      * @Route("/team/show/{team}", name="Equipa")
      */
