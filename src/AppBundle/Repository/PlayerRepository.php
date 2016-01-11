@@ -7,6 +7,16 @@ use Doctrine\ORM\Query\ResultSetMapping;
 
 class PlayerRepository extends EntityRepository {
 
+    
+    public function findTeam($team) {
+        $p = $this->getEntityManager()
+            ->createQuery(
+                'SELECT p FROM AppBundle:Player p WHERE p.id_team_player = :team '
+            )->setParameter('team', $team)
+            ->getResult();
+            return $p;
+    }
+    
     public function findTeamObject($t) {
         
         $p = $this->getEntityManager()
@@ -14,7 +24,6 @@ class PlayerRepository extends EntityRepository {
                 "SELECT p FROM AppBundle:Player p WHERE p.id_team_player = :team  "
             )->setParameter('team', $t)
             ->getResult();
-       
          return $p;
          
     }
@@ -30,5 +39,16 @@ class PlayerRepository extends EntityRepository {
       $stmt->bindValue('t', $t);
       $stmt->execute();
       return $stmt->fetchAll();
+
+            return $p;
+
+    }
+
+    public function getStrong($team){
+        $string = "select p";
+        $t = $this->getEntityManager()
+            ->createQuery();
+        return $t;
+
     }
 }

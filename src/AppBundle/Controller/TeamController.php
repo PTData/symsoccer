@@ -2,11 +2,9 @@
 
 namespace AppBundle\Controller;
 
-<<<<<<< HEAD
-=======
 use AppBundle\Livraria\Teste;
 use AppBundle\Entity\Task;
->>>>>>> master
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +20,9 @@ class TeamController extends Controller
      */
     public function teams() {
 
-        $t = new Teste();
+        $home = $this->t2(1);
+        $visitor = $this->t2(2);
+        $t = new Teste($home, $visitor);
 
         $data = $this->getDoctrine()->getManager();
         $teams = $data->getRepository('AppBundle:Team')->selectAll();
@@ -63,7 +63,20 @@ class TeamController extends Controller
         }*/
         return $team;
     }
-    
+
+    private function t2($team){
+        $data = $this->getDoctrine()->getManager();
+        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
+
+        $pl = array();
+        foreach($player as $key=>$p) {
+            $pl[$key]['qualidade'] = $p->getQualityPlayer();
+            $pl[$key]['forma'] = $p->getFormaPlayer();
+        }
+
+        return $player;
+    }
+
     /**
      * @Route("/team/show/{teamId}", name="Equipa")
      */
@@ -108,11 +121,9 @@ class TeamController extends Controller
         
          
         $equipa["jogadores"] = $pl;
-<<<<<<< HEAD
-=======
+
         //$equipa["form"] = $this->_form($pl);
 
->>>>>>> master
         return $this->render('team.html.twig', $equipa);
     }
     
@@ -131,13 +142,10 @@ class TeamController extends Controller
     }
     
     private function _form($pl) {
-<<<<<<< HEAD
-        $form = $this->createFormBuilder($pl)
-            ->add("situation", 'choice', array(
-=======
+
         $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'.$pl->getNumberPlayer()]])
             ->add('situation', 'choice', array(
->>>>>>> master
+
                     'choices'  => array(
                         'Titular' => 1,
                         'Suplente' => 2,
