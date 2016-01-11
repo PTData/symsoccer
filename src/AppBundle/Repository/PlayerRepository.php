@@ -14,7 +14,16 @@ class PlayerRepository extends EntityRepository {
                 'SELECT p FROM AppBundle:Player p WHERE p.id_team_player = :team '
             )->setParameter('team', $team)
             ->getResult();
+
             return $p;
+
+    }
+
+    public function getStrong($team){
+        $string = "select p";
+        $t = $this->getEntityManager()
+            ->createQuery();
+        return $t;
     }
     
     public function findTeamObject($t) {
