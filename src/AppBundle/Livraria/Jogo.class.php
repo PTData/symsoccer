@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: pedro.data
- * Date: 06-09-2013
- * Time: 17:43
- */
+
 class Jogo {
     
     private $conn;

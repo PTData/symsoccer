@@ -1,10 +1,5 @@
 <?php
-/**
- * The first example class, this is in the same package as the
- * procedural stuff in the start of the file
- * @package sample
- * @subpackage classes
- */
+
 class Oportunidades {
 	/**
      * A sample private variable, this can be hidden with the --parseprivate
