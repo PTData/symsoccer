@@ -131,4 +131,58 @@ class TeamController extends Controller
         return $form->createView();
     }
 
+    /**
+     * @param string $all
+     * @return float|int|null
+     */
+    public function eleven_team_strong($all = "") {
+        # all, gk, df, md, av
+        $strong = 0;
+        $condition = 0;
+        $forma = 0;
+        $pos;
+        if (empty($all)) {
+            foreach ($this->players as $str) {
+                /*
+                 * condicao e forma deveriam ser tratados com calculos diferentes
+                 */
+                $condition = $str['condition_player'] + $condition;
+                $forma = $str['forma_player'] + $forma;
+                $strong = $str['quality_player'] + $strong;
+            }
+            $cond = ($condition * 2) / 5;
+            //return round($strong + (($condition/5) / $forma));
+            return round(($strong / $forma) + $cond);
+            //return $cond;
+        } else if ($all == 'GR') {
+            $strong = $this->get_position_eleven($this->team, $all);
+            $this->gr = $strong[0]['quality_player'];
+            return $this->gr;
+        } else {
+            $pos = $this->get_position_eleven($this->team, $all);
+            $count = count($pos);
+            for ($i = 0; $i < $count; $i++) {
+                $strong     = $pos[$i]['quality_player'] + $strong;
+                $condition  = $pos[$i]['condition_player'] + $condition;
+                $forma      = $pos[$i]['forma_player'] + $forma;
+            }
+            switch ($all) {
+                case 'DF':
+                    $this->df = $strong ;
+                    return $this->df;
+                    break;
+                case 'MD':
+                    $this->md = $strong ;
+                    return $this->md;
+                    break;
+                case 'AV':
+                    $this->av = $strong ;
+                    return $this->av;
+                    break;
+            }
+        }
+
+        return null;
+    }
+
 }
