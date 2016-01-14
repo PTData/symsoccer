@@ -3,15 +3,17 @@
 namespace AppBundle\Controller;
 use AppBundle\Livraria\Teste;
 use AppBundle\Entity\Task;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Team;
-use AppBundle\Entity\Player;
 
 class TeamController extends Controller
 {
+    
+    protected $objecto = false;
     /**
      * @Route("/teams", name="Equipas")
      */
@@ -75,44 +77,74 @@ class TeamController extends Controller
     }
 
     /**
-     * @Route("/team/show/{team}", name="Equipa")
+     * @Route("/team/show/{teamId}", name="Equipa")
      */
-    public function team($team) {
+    public function team($teamId) {
         
         $data = $this->getDoctrine()->getManager();
-        $team = $data->getRepository('AppBundle:Team')->find($team);
+        $team = $data->getRepository('AppBundle:Team')->find($teamId);
         $equipa = array(
           "nome" =>  $team->getNameTeam(),
           "id" => $team->getIdteam() 
         );
         
-        /*$player = $this->forward('AppBundle:Player:players', array(
-        'team'  => $team,
-        ));*/
         $data = $this->getDoctrine()->getManager();
-        $player = $data->getRepository('AppBundle:Player')->findTeam($team);
-
+        
+        
         $pl = array();
-        foreach($player as $key=>$p) {
-            $pl[$key]['nome'] = $p->getNamePlayer();
-            $pl[$key]['idade'] = $p->getAgePlayer();
-            $pl[$key]['posicao'] = $p->getPositionPlayer();
-            $pl[$key]['qualidade'] = $p->getQualityPlayer();
-            $pl[$key]['numero'] = $p->getNumberPlayer();
-            $pl[$key]['forma'] = $p->getFormaPlayer();
-            $pl[$key]['condicao'] = $p->getConditionPlayer();
-            //$pl[$key]['situacao'] = $p->getSituation();
-            $pl[$key]['form'] = $this->_form($p);
+        if(!$this->objecto) {
+            $player = $data->getRepository('AppBundle:Player')->findTimeArray($teamId);
+            foreach ($player as $key=>$p) {
+                $pl[$key]['nome'] = $p['name_player'];
+                $pl[$key]['idade'] = $p['age_player'];
+                $pl[$key]['posicao'] = $p['position_player'];
+                $pl[$key]['qualidade'] = $p['quality_player'];
+                $pl[$key]['numero'] = $p['number_player'];
+                $pl[$key]['forma'] = $p['forma_player'];
+                $pl[$key]['condicao'] = $p['position_player'];
+                $pl[$key]['form'] = $p['situation'];
+            }
+        } elseif($this->objecto) {
+            $player = $data->getRepository('AppBundle:Player')->findTeamObject($teamId);
+            foreach($player as $key=>$p) {
+                $pl[$key]['nome'] = $p->getNamePlayer();
+                $pl[$key]['idade'] = $p->getAgePlayer();
+                $pl[$key]['posicao'] = $p->getPositionPlayer();
+                $pl[$key]['qualidade'] = $p->getQualityPlayer();
+                $pl[$key]['numero'] = $p->getNumberPlayer();
+                $pl[$key]['forma'] = $p->getFormaPlayer();
+                $pl[$key]['condicao'] = $p->getConditionPlayer();
+                $pl[$key]['form'] = $this->_form($p);
+            }
         }
+        
+         
         $equipa["jogadores"] = $pl;
+
         //$equipa["form"] = $this->_form($pl);
 
         return $this->render('team.html.twig', $equipa);
-        //return new JsonResponse($equipa);
     }
+    
+    /**
+    * Creates a ajax.
+    *
+    * @Route("/team/add/{team}", name="demo_create")
+    *
+    */
+    public function ajaxAction(Request $request,  $team) {
+        if ($request->isXMLHttpRequest()) {         
+            return new JsonResponse(array('data' => 'this is a json response'));
+        }
+
+        return new Response('This is not ajax!', 400);
+    }
+    
     private function _form($pl) {
+
         $form = $this->createFormBuilder($pl, ['attr' => ['id' => 'id_'.$pl->getNumberPlayer()]])
             ->add('situation', 'choice', array(
+
                     'choices'  => array(
                         'Titular' => 1,
                         'Suplente' => 2,
@@ -122,7 +154,7 @@ class TeamController extends Controller
                     'choices_as_values' => true,
                 ))
             
-            ->add('save', 'submit', array('label' => 'Create Task'))
+            #->add('save', 'submit', array('label' => 'Create Task'))
             ->getForm();
 
         /*return $this->render('default/new.html.twig', array(
